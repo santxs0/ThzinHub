@@ -46,7 +46,7 @@ title.BackgroundTransparency = 1
 title.Text = "ThzinHub"
 title.TextColor3 = Color3.fromRGB(255, 255, 255)
 title.Font = Enum.Font.GothamBold
-title.TextSize = 24
+title.TextSize = 23
 title.TextXAlignment = Enum.TextXAlignment.Left
 title.Parent = panel
 
