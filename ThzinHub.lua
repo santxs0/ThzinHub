@@ -2,17 +2,17 @@ local player = game.Players.LocalPlayer
 local screenGui = Instance.new("ScreenGui")
 screenGui.Parent = player:WaitForChild("PlayerGui")
 
--- Ícone pequeno como botão
+-- Ícone cinza maior
 local icon = Instance.new("TextButton")
-icon.Size = UDim2.new(0, 50, 0, 50)
+icon.Size = UDim2.new(0, 70, 0, 70) -- maior que antes
 icon.Position = UDim2.new(0, 50, 0, 50)
-icon.BackgroundColor3 = Color3.fromRGB(51, 153, 255)
+icon.BackgroundColor3 = Color3.fromRGB(120, 120, 120) -- cinza
 icon.Text = ""
 icon.Parent = screenGui
 
 -- Arredondar cantos do ícone
 local iconCorner = Instance.new("UICorner")
-iconCorner.CornerRadius = UDim.new(0, 10)
+iconCorner.CornerRadius = UDim.new(0, 15) -- cantos mais arredondados
 iconCorner.Parent = icon
 
 -- Painel maior
