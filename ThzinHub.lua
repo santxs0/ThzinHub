@@ -41,7 +41,7 @@ gradient.Parent = panel
 -- Nome ThzinHub no topo
 local title = Instance.new("TextLabel")
 title.Size = UDim2.new(1, 0, 0, 40)
-title.Position = UDim2.new(0, 10, 0, 0)
+title.Position = UDim2.new(0, 35, 0, 0)
 title.BackgroundTransparency = 1
 title.Text = "ThzinHub"
 title.TextColor3 = Color3.fromRGB(255, 255, 255)
