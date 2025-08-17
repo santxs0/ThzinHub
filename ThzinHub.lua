@@ -2,22 +2,22 @@ local player = game.Players.LocalPlayer
 local screenGui = Instance.new("ScreenGui")
 screenGui.Parent = player:WaitForChild("PlayerGui")
 
--- Ícone cinza para abrir o painel
+-- Ícone cinza menor (móvel)
 local icon = Instance.new("TextButton")
-icon.Size = UDim2.new(0, 70, 0, 70)
+icon.Size = UDim2.new(0, 40, 0, 40) -- menor
 icon.Position = UDim2.new(0, 50, 0, 50)
 icon.BackgroundColor3 = Color3.fromRGB(120, 120, 120)
 icon.Text = ""
 icon.Parent = screenGui
 
 local iconCorner = Instance.new("UICorner")
-iconCorner.CornerRadius = UDim.new(0, 15)
+iconCorner.CornerRadius = UDim.new(0, 10)
 iconCorner.Parent = icon
 
--- Painel cinza (inicialmente invisível)
+-- Painel maior
 local panel = Instance.new("Frame")
-panel.Size = UDim2.new(0, 300, 0, 200)
-panel.Position = UDim2.new(0.5, -150, 0.5, -100) -- centralizado
+panel.Size = UDim2.new(0, 500, 0, 300) -- maior
+panel.Position = UDim2.new(0.5, -250, 0.5, -150) -- centralizado
 panel.BackgroundColor3 = Color3.fromRGB(200, 200, 200)
 panel.Visible = false
 panel.Parent = screenGui
@@ -26,15 +26,15 @@ local panelCorner = Instance.new("UICorner")
 panelCorner.CornerRadius = UDim.new(0, 15)
 panelCorner.Parent = panel
 
--- Função para animar abertura e fechamento
+-- Animação do painel
 local TweenService = game:GetService("TweenService")
 local tweenInfo = TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
 
 local function openPanel()
-    panel.Position = UDim2.new(0.5, -150, 0.5, -100)
+    panel.Position = UDim2.new(0.5, -250, 0.5, -150)
     panel.Size = UDim2.new(0, 0, 0, 0)
     panel.Visible = true
-    TweenService:Create(panel, tweenInfo, {Size = UDim2.new(0, 300, 0, 200)}):Play()
+    TweenService:Create(panel, tweenInfo, {Size = UDim2.new(0, 500, 0, 300)}):Play()
 end
 
 local function closePanel()
@@ -54,7 +54,7 @@ icon.MouseButton1Click:Connect(function()
     end
 end)
 
--- Variáveis para arrastar o painel
+-- Tornar painel arrastável
 local dragging = false
 local dragInput, dragStart, startPos
 
@@ -83,5 +83,37 @@ game:GetService("UserInputService").InputChanged:Connect(function(input)
         local delta = input.Position - dragStart
         panel.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X,
                                     startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+    end
+end)
+
+-- Tornar ícone arrastável também
+local iconDragging = false
+local iconDragInput, iconDragStart, iconStartPos
+
+icon.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+        iconDragging = true
+        iconDragStart = input.Position
+        iconStartPos = icon.Position
+
+        input.Changed:Connect(function()
+            if input.UserInputState == Enum.UserInputState.End then
+                iconDragging = false
+            end
+        end)
+    end
+end)
+
+icon.InputChanged:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+        iconDragInput = input
+    end
+end)
+
+game:GetService("UserInputService").InputChanged:Connect(function(input)
+    if iconDragging and input == iconDragInput then
+        local delta = input.Position - iconDragStart
+        icon.Position = UDim2.new(iconStartPos.X.Scale, iconStartPos.X.Offset + delta.X,
+                                  iconStartPos.Y.Scale, iconStartPos.Y.Offset + delta.Y)
     end
 end)
